@@ -19,13 +19,13 @@ public class Game {
         while (true) {
             System.out.println("Начать новую игру [Y] или выйти [N]?");
             Scanner scanner = new Scanner(System.in);
-            String answer = scanner.nextLine();
+            char answer = Character.toLowerCase(scanner.next().charAt(0));
 
-            if (answer.equals("n") || answer.equals("N")) {
+            if (answer == 'n')  {
                 break;
             }
 
-            if (answer.equals("y") || answer.equals("Y")) {
+            if (answer == 'y') {
                 newGame();
             }
         }
@@ -52,10 +52,12 @@ public class Game {
             if (selectedWord.contains(String.valueOf(letter))) {
                 processCorrectGuess(selectedWord, letter, lettersOfGuessedWord);
             } else {
-                System.out.println("Вы ошиблись!");
-                System.out.println(STAGES.get(STAGES.size() - remainingAttempts));
+                if (usingLetters.contains(letter)) {
+                    printUsingLetters(lettersOfGuessedWord, usingLetters);
+                    continue;
+                }
 
-                remainingAttempts--;
+                remainingAttempts = calculateRemainingAttempts(remainingAttempts);
 
                 if (remainingAttempts == 0) {
                     System.out.println("Вы проиграли!");
@@ -71,11 +73,7 @@ public class Game {
                 usingLetters.add(letter);
             }
 
-            guessedWord = new String(lettersOfGuessedWord);
-            System.out.println(guessedWord);
-            System.out.print("Вы использовали буквы: ");
-            usingLetters.forEach(usingLetter -> System.out.print(usingLetter + " "));
-            System.out.println();
+            printUsingLetters(lettersOfGuessedWord, usingLetters);
         }
     }
 
@@ -85,5 +83,22 @@ public class Game {
                 lettersOfGuessedWord[i] = letter;
             }
         }
+    }
+
+    private void printUsingLetters(char[] lettersOfGuessedWord, List<Character> usingLetters) {
+        String guessedWord = new String(lettersOfGuessedWord);
+        System.out.println(guessedWord);
+
+        System.out.print("Вы использовали буквы: ");
+        usingLetters.forEach(usingLetter -> System.out.print(usingLetter + " "));
+
+        System.out.println();
+    }
+
+    private int calculateRemainingAttempts(int remainingAttempts) {
+        System.out.println("Вы ошиблись!");
+        System.out.println(STAGES.get(STAGES.size() - remainingAttempts));
+
+        return --remainingAttempts;
     }
 }
