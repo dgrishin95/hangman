@@ -73,6 +73,9 @@ public class Game {
                 usingLetters.add(letter);
             }
 
+            guessedWord = new String(lettersOfGuessedWord);
+            System.out.println(guessedWord);
+
             printUsingLetters(lettersOfGuessedWord, usingLetters);
         }
     }
@@ -86,9 +89,6 @@ public class Game {
     }
 
     private void printUsingLetters(char[] lettersOfGuessedWord, List<Character> usingLetters) {
-        String guessedWord = new String(lettersOfGuessedWord);
-        System.out.println(guessedWord);
-
         System.out.print("Вы использовали буквы: ");
         usingLetters.forEach(usingLetter -> System.out.print(usingLetter + " "));
 

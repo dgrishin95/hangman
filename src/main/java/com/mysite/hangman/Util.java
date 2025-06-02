@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 public class Util {
     public static List<String> loadWords() {
         List<String> words;
-        URL wordsResourceUrl = Util.class.getClassLoader().getResource("words_t.txt");
+        URL wordsResourceUrl = Util.class.getClassLoader().getResource("words.txt");
 
         try {
             words = FileUtils.readLines(new File(wordsResourceUrl.toURI()), StandardCharsets.UTF_8);
